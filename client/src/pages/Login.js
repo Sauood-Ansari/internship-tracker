@@ -34,7 +34,12 @@ function Login() {
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid email or password. Please try again.");
+      const serverMessage = err.response?.data?.message || "";
+      if (/otp|one[- ]?time|verification code|2fa|mfa/i.test(serverMessage)) {
+        setError("Invalid email or password. Please try again.");
+      } else {
+        setError(serverMessage || "Invalid email or password. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

@@ -47,7 +47,12 @@ function Register() {
       setSuccess(res.data.message || "Registration successful.");
       setTimeout(() => navigate("/"), 1200);
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed. Please try again.");
+      const serverMessage = err.response?.data?.message || "";
+      if (/otp|one[- ]?time|verification code|2fa|mfa/i.test(serverMessage)) {
+        setError("Registration failed. Please try again.");
+      } else {
+        setError(serverMessage || "Registration failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

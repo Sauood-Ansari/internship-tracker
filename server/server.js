@@ -8,7 +8,6 @@ const fs = require("fs");
 
 const authRoutes = require("./routes/authRoutes");
 const jobRoutes = require("./routes/jobRoutes");
-const { startReminderScheduler } = require("./services/reminderService");
 
 const app = express();
 
